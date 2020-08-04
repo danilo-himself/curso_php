@@ -57,10 +57,14 @@ class Usuario
 		{
 			$row = $results[0];
 			
+			/*
 			$this->setIdusuario($row['idusuario']);
 			$this->setDeslogin($row['deslogin']);
 			$this->setDessenha($row['dessenha']);
 			$this->setDtcadastro($row['dtcadastro']);
+			*/
+			
+			$this->setData($row);
 			
 		}
 	}
@@ -79,6 +83,14 @@ class Usuario
 		return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin like :SERACH ORDER BY deslogin", array(":SERACH"=>"%".$login."%"));
 	}
 	
+	public function setData($data)
+	{
+		$this->setIdusuario($data['idusuario']);
+		$this->setDeslogin($data['deslogin']);
+		$this->setDessenha($data['dessenha']);
+		$this->setDtcadastro($data['dtcadastro']);
+	}
+	
 	public function login($login, $senha)
 	{
 		$sql = new Sql();
@@ -94,13 +106,27 @@ class Usuario
 		{
 			$row = $results[0];
 			
+			/*
 			$this->setIdusuario($row['idusuario']);
 			$this->setDeslogin($row['deslogin']);
 			$this->setDessenha($row['dessenha']);
 			$this->setDtcadastro($row['dtcadastro']);
+			*/
 			
+			$this->setData($row);
 		}
 	}
+	
+	public function insert()
+	{
+		$sql = new Sql();
+		
+		$results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
+			":LOGIN"=>$this->getDeslogin(),
+			":SENHA"=>$this->getDessenha
+		));
+	}
+		
 	
 	public function __toString()
 	{
