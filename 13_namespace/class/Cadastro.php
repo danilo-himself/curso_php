@@ -38,11 +38,11 @@ class Cadastro
 	
 	public function __toString()
 	{
-		return json_encode(
+		return json_encode(array(
 			"nome"=>$this->getNome(),
 			"email"=>$this->getEmail(),
-			"senha"=>$this->getSenha(),
-		);
+			"senha"=>$this->getSenha()
+		));
 	}
 }
 
