@@ -1,0 +1,14 @@
+{
+    "name": "hcodebr/composer",
+    "description": "Aula de PHP 7",
+    "authors": [
+        {
+            "name": "danilo-himself",
+            "email": "danilo.journeyman@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+		"monolog/monolog":"1.0.*"
+	}
+}
