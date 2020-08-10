@@ -1,0 +1,39 @@
+arquivo configuracao apache : httpd.conf
+arquivo configuracao php : php.ini
+
+htdocs\index.php
+
+*******************************************************************************
+
+comandos git:
+
+git init
+git add 				*adiciona arquivo
+
+git add -all			*adiciona todos os arquivos
+git commit -m "teste"
+
+git remote add origin https://github.com/danilo-himself/Curso-php.git
+git config --global user.name "danilo-himself"
+git confgi --global user.email "danilo.journeyman@gmail.com"
+
+git push origin master
+
+git pull origin master
+
+*******************************************************************************
+
+criando diretorio virtual arquivo httpd-vhosts.conf
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "C:/xampp/htdocs/website"
+    ServerName local.cursophp7.com.br
+    ErrorLog "logs/dummy-host2.example.com-error.log"
+    CustomLog "logs/dummy-host2.example.com-access.log" common
+	<Directory "C:/xampp/htdocs/website">
+		Order allow,deny
+		Allow from all
+		Require all granted
+	</Directory>
+</VirtualHost>
