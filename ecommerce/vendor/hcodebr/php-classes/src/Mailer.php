@@ -23,7 +23,7 @@ class Mailer{
         
         Tpl::configure($config);
         
-        $this->tpl = new Tpl();
+        $tpl = new Tpl();
         
         foreach ($data as $key => $value)
         {
@@ -31,7 +31,7 @@ class Mailer{
             
         }
         
-        $this->tpl->draw($tplName, true);
+        $html = $tpl->draw($tplName, true);
         
         
         /**
@@ -69,7 +69,7 @@ class Mailer{
         $this->mail->Port = 587;
         
         //Set the encryption mechanism to use - STARTTLS or SMTPS
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $this->mail->SMTPSecure = 'tls';
         
         //Whether to use SMTP authentication
         $this->mail->SMTPAuth = true;
@@ -94,13 +94,13 @@ class Mailer{
         
         //Read an HTML message body from an external file, convert referenced images to embedded,
         //convert HTML into a basic plain-text alternative body
-        $this->mail->msgHTML(file_get_contents('contents.html'), __DIR__);
+        $this->mail->msgHTML($html);
         
         //Replace the plain text body with one created manually
         $this->mail->AltBody = 'This is a plain-text message body';
         
         //Attach an image file
-        $this->mail->addAttachment('images/phpmailer_mini.png');
+        //$this->mail->addAttachment('images/phpmailer_mini.png');
         
     }
     
