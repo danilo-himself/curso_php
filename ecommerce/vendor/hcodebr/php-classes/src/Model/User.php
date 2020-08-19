@@ -25,7 +25,7 @@ class User extends Model{
         
         $data = $results[0];
         
-        if (password_verify($password, $data["despassword"]) === true)
+        if ((password_verify($password, $data["despassword"]) === true))
         {
             
             $user = new User();
@@ -96,7 +96,7 @@ class User extends Model{
         $results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
             ":desperson"=>$this->getdesperson(),
             ":deslogin"=>$this->getdeslogin(),
-            ":despassword"=>$this->getdespassword(),
+            ":despassword"=>password_hash($this->getdespassword(), PASSWORD_DEFAULT),
             ":desemail"=>$this->getdesemail(),
             ":nrphone"=>$this->getnrphone(),
             ":inadmin"=>$this->getinadmin(),
@@ -123,7 +123,7 @@ class User extends Model{
             ":iduser"=>$this->getiduser(),
             ":desperson"=>$this->getdesperson(),
             ":deslogin"=>$this->getdeslogin(),
-            ":despassword"=>$this->getdespassword(),
+            ":despassword"=>password_hash($this->getdespassword(), PASSWORD_DEFAULT),
             ":desemail"=>$this->getdesemail(),
             ":nrphone"=>$this->getnrphone(),
             ":inadmin"=>$this->getinadmin()
@@ -180,7 +180,7 @@ class User extends Model{
                 
                 $code = base64_encode($dataRecovery["idrecovery"]);
                 
-                $link = "http://hcodecommerce.com.br/Admin/forgot/reset?code=$code"; 
+                $link = "http://www.hcodecommerce.com.br/Admin/forgot/reset?code=$code"; 
                 
                 $mailer = new Mailer($data["desemail"], $data["desperson"], "Redefinir Senha da Hcode Store", "forgot", array(
                     "name"=>$data["desperson"],
@@ -212,7 +212,7 @@ class User extends Model{
                 AND 
                 a.dtrecovery IS NULL
                 AND 
-                DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();",
+                DATE_ADD(a.dtregister, INTERVAL 2 DAY) >= NOW();",
             array(":idrecovery" => $idrecovery));
         
         if (count($results) === 0)
@@ -234,15 +234,15 @@ class User extends Model{
         
         $sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery= :idrecovery",
             array(":idrecovery" => $idrecovery));
-        
-        
-        
+                       
     }
     
     public function setPassword($password)
     {
         
         $sql = new Sql();
+        
+        $password = password_hash($password, PASSWORD_DEFAULT);
         
         $sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser",
             array(
