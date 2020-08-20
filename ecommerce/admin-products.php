@@ -77,4 +77,18 @@ $app->post("/Admin/products/:idproduct", function($idproduct)
     
 });
 
+$app->get("/Admin/products/:idproduct/delete", function($idproduct)
+{
+    User::verifyLogin();
+    
+    $product = new Product();
+    $product->get((int)$idproduct);
+    
+    $product->delete();
+    
+    header("Location: /Admin/products");
+    exit;
+    
+});
+
 ?>
