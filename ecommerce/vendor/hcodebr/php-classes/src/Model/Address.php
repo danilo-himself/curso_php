@@ -59,7 +59,8 @@ class Address extends Model
             :descity, 
             :desstate, 
             :descountry, 
-            :deszipcode",
+            :deszipcode,
+            :desdistrict)",
             [
                 ":idaddress" => $this->getidaddress(),
                 ":idperson" => $this->getidperson(),
@@ -68,8 +69,14 @@ class Address extends Model
                 ":descity" => utf8_decode($this->getdescity()),
                 ":desstate" => utf8_decode($this->getdesstate()),
                 ":descountry" => utf8_decode($this->getdescountry()),
-                ":deszipcode" => $this->getdeszipcode()
+                ":deszipcode" => $this->getdeszipcode(),
+                ":desdistrict" => $this->getdesdistrict(),
             ]);
+        
+        /*
+        var_dump($results);
+        exit;
+        */
         
         if(count($results) > 0)
         {
